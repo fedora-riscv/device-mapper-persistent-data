@@ -4,7 +4,7 @@
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
 Version: 0.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -46,6 +46,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_root_sbindir}/thin_restore
 
 %changelog
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-3
+- Rebuilt for c++ ABI breakage
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
