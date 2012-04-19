@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.1.2
+Version: 0.1.4
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -20,7 +20,6 @@ manage device-mapper thin provisioning target metadata devices.
 %setup -q -n thin-provisioning-tools-v%{version}
 
 %build
-%global _root_sbindir /sbin
 %configure --enable-debug --enable-testing
 make %{?_smp_mflags}
 
@@ -34,11 +33,15 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_mandir}/man8/thin_dump.8.gz
 %{_mandir}/man8/thin_check.8.gz
 %{_mandir}/man8/thin_restore.8.gz
-%{_root_sbindir}/thin_dump
-%{_root_sbindir}/thin_check
-%{_root_sbindir}/thin_restore
+%{_sbindir}/thin_dump
+%{_sbindir}/thin_check
+%{_sbindir}/thin_restore
 
 %changelog
+* Thu Apr 19 2012 Milan Broz <mbroz@redhat.com> - 0.1.4-1
+- Fix thin_check man page (add -q option).
+- Install utilities in /usr/sbin.
+
 * Tue Mar 13 2012 Milan Broz <mbroz@redhat.com> - 0.1.2-1
 - New upstream version.
 
