@@ -4,12 +4,13 @@
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
 Version: 0.2.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
+Patch0: %{name}-0.2.1-nostrip.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -19,11 +20,12 @@ manage device-mapper thin provisioning target metadata devices.
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
+%patch0 -p1
 
 %build
 autoconf
-%configure
-make %{?_smp_mflags}
+%configure --with-optimisation=
+make %{?_smp_mflags} V=
 
 %install
 make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
@@ -42,6 +44,12 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Tue Jul 16 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-2
+- Build with nostrip fix from Ville Skyttä
+
+* Mon Jul 15 2013 Ville Skyttä <ville.skytta@iki.fi> - 0.2.1-2
+- Let rpmbuild strip binaries, don't override optflags, build more verbose.
+
 * Fri Jul 12 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-1
 - New upstream version.
 
