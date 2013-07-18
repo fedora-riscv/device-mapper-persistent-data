@@ -1,0 +1,281 @@
+diff --git a/Makefile.in b/Makefile.in
+index 1e7bd54..b44cbd7 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -264,7 +264,10 @@ install: $(PROGRAMS)
+ 	$(INSTALL_DIR) $(MANPATH)/man8
+ 	$(INSTALL_DATA) man8/thin_check.8 $(MANPATH)/man8
+ 	$(INSTALL_DATA) man8/thin_dump.8 $(MANPATH)/man8
++	$(INSTALL_DATA) man8/thin_repair.8 $(MANPATH)/man8
+ 	$(INSTALL_DATA) man8/thin_restore.8 $(MANPATH)/man8
++	$(INSTALL_DATA) man8/thin_rmap.8 $(MANPATH)/man8
++	$(INSTALL_DATA) man8/thin_metadata_size.8 $(MANPATH)/man8
+ 
+ .PHONY: install
+ 
+diff --git a/man8/thin_check.8 b/man8/thin_check.8
+index f9606e0..1489078 100644
+--- a/man8/thin_check.8
++++ b/man8/thin_check.8
+@@ -55,7 +55,10 @@ returns an exit code of 0 for success or 1 for error.
+ 
+ .SH SEE ALSO
+ .B thin_dump(8)
++.B thin_repair(8)
+ .B thin_restore(8)
++.B thin_rmap(8)
++.B thin_metadata_size(8)
+ 
+ .SH AUTHOR
+ Joe Thornber <ejt@redhat.com>
+diff --git a/man8/thin_dump.8 b/man8/thin_dump.8
+index 697df83..e60a6e5 100644
+--- a/man8/thin_dump.8
++++ b/man8/thin_dump.8
+@@ -9,7 +9,8 @@ thin_dump \- dump thin provisioning metadata from device or file to standard out
+ 
+ .SH DESCRIPTION
+ .B thin_dump
+-dumps thin provisioning metadata created by the device-mapper
++dumps binary thin provisioning metadata (optionally from alternate block;
++see option \-\-metadata-snap) created by the device-mapper
+ thin provisioning target on a device or file to standard output for
+ analysis or postprocessing in either XML or human readable format.
+ XML formated metadata can be fed into thin_restore (see
+@@ -22,6 +23,10 @@ Print output in XML or human readable format.
+ 
+ .IP "\fB\-r, \-\-repair\fP".
+ 
++.IP "\fB\-m, \-\-metadata_snap\fP block#".
++Dump metadata snapshot created by device-mapper thin provisioning target at block#
++
++
+ .IP "\fB\-h, \-\-help\fP".
+ Print help and exit.
+ 
+@@ -45,8 +50,10 @@ returns an exit code of 0 for success or 1 for error.
+ 
+ .SH SEE ALSO
+ .B thin_check(8)
++.B thin_repair(8)
+ .B thin_restore(8)
+-
++.B thin_rmap(8)
++.B thin_metadata_size(8)
+ .SH AUTHOR
+ Joe Thornber <ejt@redhat.com>
+ .br
+diff --git a/man8/thin_metadata_size.8 b/man8/thin_metadata_size.8
+new file mode 100644
+index 0000000..33b36b3
+--- /dev/null
++++ b/man8/thin_metadata_size.8
+@@ -0,0 +1,77 @@
++.TH THIN_METADATA_SIZE 8 "Thin Provisioning Tools" "Red Hat, Inc." \" -*- nroff -*-
++.SH NAME
++thin_metadata_size \- thin provisioning metadata file/device size calculator.
++
++.SH SYNOPSIS
++.B thin_metadata_size
++.RB [ options ]
++
++.SH DESCRIPTION
++.B thin_metadata_size
++calculates the size of the thin provisioning metadata based on the block size
++of the thin provisioned devices, the size of the thin provisioning pool and
++the maximum number of all thin prisioned devices and snapshots. Size/number
++option arguments can be followed by unit specifiers in short one character
++and long form (eg. -b1m or -b1megabytes).
++
++.IP "\fB\-b, \-\-block-size\fP \fIBLOCKSIZE[bskKmMgGtTpPeEzZyY]\fP"
++Block size of thin provisioned devices in units of bytes,sectors,kilobytes,kibibytes,... respectively.
++Default is in sectors without a block size unit specifier.
++
++.IP "\fB\-s, \-\-pool-size\fP \fIPOOLSIZE[bskKmMgGtTpPeEzZyY]\fP"
++Thin provisioning pool size in units of bytes,sectors,kilobytes,kibibytes,... respectively.
++Default is in sectors without a pool size unit specifier.
++
++.IP "\fB\-m, \-\-max-thins\fP \fI#[bskKmMgGtTpPeEzZyY]\fP"
++Maximum sum of all thin provisioned devices and snapshots.
++Unit identifier supported to allow for convenient entry of large quantities, eg. 1000000 = 1M.
++Default is absolut quantity without a number unit specifier.
++
++.IP "\fB\-u, \-\-unit\fP \fI{bskKmMgGtTpPeEzZyY}\fP"
++Output unit specifier in units of bytes,sectors,kilobytes,kibibytes,... respectively.
++Default is in sectors without an output unit specifier.
++
++.IP "\fB\-n, \-\-numeric-only [short|long]\fP"
++Limit output to just the size number with the optional unit specifier character/string.
++
++.IP "\fB\-h, \-\-help\fP"
++Print help and exit.
++
++.IP "\fB\-V, \-\-version\fP"
++Output version information and exit.
++
++.SH EXAMPLES
++Calculates the thin privisioning metadata device size for block size 64 kilobytes,
++pool size 1 terabytes and maximum number of thin provisioned devices and snapshots of 1000
++in units of sectors with long output:
++.sp
++.B thin_metadata_size -b64k -s1t -m1000
++
++Or (using the long options instead) for block size 1 gigabyte, pool size 1 petabytes and maximum number of thin provisioned devices
++and snapshots of 1 million with numeric only output in units of gigabytes:
++.sp
++.B thin_metadata_size --block-size=1g --pool-size=1p --max-thins=1M --unit=g --numeric-only
++
++Same as before (1g,1p,1M,numeric-only) but with unit specifier character appended:
++.sp
++.B thin_metadata_size --block-size=1giga --pool-size=1petabytes --max-thins=1mebi --unit=g --numeric-only=short
++
++Or with unit specifier string appended:
++.sp
++.B thin_metadata_size --block-size=1giga --pool-size=1petabytes --max-thins=1mebi --unit=g -nlong
++
++.SH DIAGNOSTICS
++.B thin_metadata_size
++returns an exit code of 0 for success or 1 for error.
++
++.SH SEE ALSO
++.B thin_dump(8)
++.B thin_check(8)
++.B thin_repair(8)
++.B thin_restore(8)
++.B thin_rmap(8)
++
++.SH AUTHOR
++Joe Thornber <ejt@redhat.com>
++.br
++Heinz Mauelshagen <HeinzM@RedHat.com>
+diff --git a/man8/thin_repair.8 b/man8/thin_repair.8
+new file mode 100644
+index 0000000..69cddea
+--- /dev/null
++++ b/man8/thin_repair.8
+@@ -0,0 +1,54 @@
++.TH THIN_REPAIR 8 "Thin Provisioning Tools" "Red Hat, Inc." \" -*- nroff -*-
++.SH NAME
++thin_repair \- repair thin provisioning binary metadata from device/file to device/file
++
++.SH SYNOPSIS
++.B thin_repair
++.RB [ options ]
++.RB -i
++.I {device|file}
++.RB -o
++.I {device|file}
++
++.SH DESCRIPTION
++.B thin_repair
++repairs binary thin provisioning metadata created by the
++respective device-mapper target processing to another device or file.
++If repaired to a metadata device, the metadata can be processed
++by the device-mapper target.
++
++.IP "\fB\-i, \-\-input\fP \fI{device|file}\fP"
++Input file or device with binary metadata.
++
++.IP "\fB\-o, \-\-output\fP \fI{device|file}\fP"
++Output file or device for repaired binary metadata.
++
++.IP "\fB\-h, \-\-help\fP"
++Print help and exit.
++
++.IP "\fB\-V, \-\-version\fP"
++Output version information and exit.
++
++.SH EXAMPLE
++Repairs the binary thin provisioning metadata on file
++.B metadata
++to logical volume /dev/vg/metadata for further processing by the
++respective device-mapper target:
++.sp
++.B thin_repair -i metadata -o /dev/vg/metadata
++
++.SH DIAGNOSTICS
++.B thin_repair
++returns an exit code of 0 for success or 1 for error.
++
++.SH SEE ALSO
++.B thin_dump(8)
++.B thin_check(8)
++.B thin_restore(8)
++.B thin_rmap(8)
++.B thin_metadata_size(8)
++
++.SH AUTHOR
++Joe Thornber <ejt@redhat.com>
++.br
++Heinz Mauelshagen <HeinzM@RedHat.com>
+diff --git a/man8/thin_restore.8 b/man8/thin_restore.8
+index b4a07aa..8ab2976 100644
+--- a/man8/thin_restore.8
++++ b/man8/thin_restore.8
+@@ -40,12 +40,15 @@ respective device-mapper target:
+ .B thin_restore -i metadata -o /dev/vg/metadata
+ 
+ .SH DIAGNOSTICS
+-.B thin_dump
++.B thin_restore
+ returns an exit code of 0 for success or 1 for error.
+ 
+ .SH SEE ALSO
+ .B thin_dump(8)
+ .B thin_check(8)
++.B thin_repair(8)
++.B thin_rmap(8)
++.B thin_metadata_size(8)
+ 
+ .SH AUTHOR
+ Joe Thornber <ejt@redhat.com>
+diff --git a/man8/thin_rmap.8 b/man8/thin_rmap.8
+new file mode 100644
+index 0000000..d68defb
+--- /dev/null
++++ b/man8/thin_rmap.8
+@@ -0,0 +1,44 @@
++.TH THIN_DUMP 8 "Thin Provisioning Tools" "Red Hat, Inc." \" -*- nroff -*-
++.SH NAME
++thin_rmap \- output reverse map of a thin provisioned region of blocks
++
++.SH SYNOPSIS
++.B thin_rmap
++.RB [options]
++.I {metadata device|file}
++
++.SH DESCRIPTION
++.B thin_rmap
++outputs the reverse mapping for a region of thin provisioned pool blocks
++to the respective thin provisioned devices.
++
++.IP "\fB\\-\-region\fP \fI<block range>\fP".
++output reverse map
++
++.IP "\fB\-h, \-\-help\fP".
++Print help and exit.
++
++.IP "\fB\-V, \-\-version\fP".
++Output version information and exit.
++
++.SH EXAMPLES
++output reverse map for pool blocks 5..45 (denotes blocks 5 to 44 inclusive, but not block 45)
++
++.sp
++.B thin_rmap -r 5..45 /dev/vg/pool
++
++.SH DIAGNOSTICS
++.B thin_rmap
++returns an exit code of 0 for success or 1 for error.
++
++.SH SEE ALSO
++.B thin_check(8)
++.B thin_dump(8)
++.B thin_repair(8)
++.B thin_restore(8)
++.B thin_metadata_size(8)
++
++.SH AUTHOR
++Joe Thornber <ejt@redhat.com>
++.br
++Heinz Mauelshagen <HeinzM@RedHat.com>

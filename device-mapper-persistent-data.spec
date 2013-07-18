@@ -4,23 +4,29 @@
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
 Version: 0.2.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: %{name}-0.2.1-nostrip.patch
+Patch1: %{name}-0.2.1-thin_dump-support-metadata-snap-block.patch
+Patch2: %{name}-0.2.1-new-thin_metadata_size.c.patch
+Patch3: %{name}-0.2.1-man-pages-new-thin_metadata_size-and-fixes.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
 %description
-thin-provisioning-tools contains check,dump,restore,repair and rmap tools to
-manage device-mapper thin provisioning target metadata devices.
+thin-provisioning-tools contains check,dump,restore,repair,rmap and metadata_size
+tools to manage device-mapper thin provisioning target metadata devices.
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 autoconf
@@ -34,16 +40,26 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 
 %files
 %doc COPYING README.md
-%{_mandir}/man8/thin_dump.8.gz
 %{_mandir}/man8/thin_check.8.gz
+%{_mandir}/man8/thin_dump.8.gz
+%{_mandir}/man8/thin_metadata_size.8.gz
+%{_mandir}/man8/thin_repair.8.gz
 %{_mandir}/man8/thin_restore.8.gz
-%{_sbindir}/thin_dump
+%{_mandir}/man8/thin_rmap.8.gz
 %{_sbindir}/thin_check
+%{_sbindir}/thin_dump
+%{_sbindir}/thin_metadata_size
 %{_sbindir}/thin_repair
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_rmap
 
 %changelog
+* Thu Jul 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-3
+- New thin_metadata_size tool to estimate amount of metadata space
+  based on block size, pool size and maximum amount of thin devs and snapshots
+- support metadata snapshots in thin_dump tool
+- New man pages for thin_metadata_size, thin_repair and thin_rmap and man page fixes
+
 * Tue Jul 16 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-2
 - Build with nostrip fix from Ville Skyttä
 
