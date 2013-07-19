@@ -4,7 +4,7 @@
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
 Version: 0.2.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -14,6 +14,8 @@ Patch0: %{name}-0.2.1-nostrip.patch
 Patch1: %{name}-0.2.1-thin_dump-support-metadata-snap-block.patch
 Patch2: %{name}-0.2.1-new-thin_metadata_size.c.patch
 Patch3: %{name}-0.2.1-man-pages-new-thin_metadata_size-and-fixes.patch
+Patch4: %{name}-0.2.1-update-thin_metadata_size-man-page.patch
+Patch5: %{name}-0.2.1-support-thin_dump-default-metadata-snapshot.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -23,10 +25,13 @@ tools to manage device-mapper thin provisioning target metadata devices.
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
+echo %{version}-%{release} > VERSION
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 autoconf
@@ -54,6 +59,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Fri Jul 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-4
+- Update thin_metadata_size manual page
+- thin_dump: support dumping default metadata snapshot
+
 * Thu Jul 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-3
 - New thin_metadata_size tool to estimate amount of metadata space
   based on block size, pool size and maximum amount of thin devs and snapshots
