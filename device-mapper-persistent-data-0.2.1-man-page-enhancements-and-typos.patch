@@ -1,0 +1,160 @@
+diff --git a/man8/thin_dump.8 b/man8/thin_dump.8
+index b26cc2c..4827e1a 100644
+--- a/man8/thin_dump.8
++++ b/man8/thin_dump.8
+@@ -5,30 +5,37 @@ thin_dump \- dump thin provisioning metadata from device or file to standard out
+ .SH SYNOPSIS
+ .B thin_dump
+ .RB [options]
+-.I {metadata device|file}
++.I {device|file}
+ 
+ .SH DESCRIPTION
+ .B thin_dump
+ dumps binary thin provisioning metadata (optionally from alternate block;
+ see option \-\-metadata-snap) created by the device-mapper
+-thin provisioning target on a device or file to standard output for
++thin provisioning target on a
++.I device
++or
++.I file
++to standard output for
+ analysis or postprocessing in either XML or human readable format.
+ XML formated metadata can be fed into thin_restore (see
+ .BR thin_restore(8) )
+-in order to put it back onto a metadata device (to process by
+-the device-mapper target) or file.
++in order to put it back onto a metadata
++.I device
++(to process by the device-mapper target) or
++.I file.
+ 
+ .IP "\fB\-f, \-\-format\fP \fI{xml|human_readable}\fP".
+ Print output in XML or human readable format.
+ 
+ .IP "\fB\-r, \-\-repair\fP".
++Repair the metadata whilst dumping it.
+ 
+ .IP "\fB\-m, \-\-metadata_snap\fP [block#]".
+ Dump metadata snapshot created by device-mapper thin provisioning target.
+ If block is not provided, access the default metadata snapshot created by
+ the thin provisioning device-mapper target, else try the one at block#.
+ See the thin provisioning target documentation on how to create or release
+-a metadata snapshot.
++a metadata snapshot and retrieve the block number from the kernel.
+ 
+ .IP "\fB\-h, \-\-help\fP".
+ Print help and exit.
+diff --git a/man8/thin_metadata_size.8 b/man8/thin_metadata_size.8
+index 6b00e73..80e572f 100644
+--- a/man8/thin_metadata_size.8
++++ b/man8/thin_metadata_size.8
+@@ -27,7 +27,7 @@ Default is in sectors without a pool size unit specifier.
+ .IP "\fB\-m, \-\-max-thins\fP \fI#[bskKmMgGtTpPeEzZyY]\fP"
+ Maximum sum of all thin provisioned devices and snapshots.
+ Unit identifier supported to allow for convenient entry of large quantities, eg. 1000000 = 1M.
+-Default is absolut quantity without a number unit specifier.
++Default is absolute quantity without a number unit specifier.
+ 
+ .IP "\fB\-u, \-\-unit\fP \fI{bskKmMgGtTpPeEzZyY}\fP"
+ Output unit specifier in units of bytes,sectors,kilobytes,kibibytes,... respectively.
+@@ -43,7 +43,7 @@ Print help and exit.
+ Output version information and exit.
+ 
+ .SH EXAMPLES
+-Calculates the thin privisioning metadata device size for block size 64 kilobytes,
++Calculates the thin provisioning metadata device size for block size 64 kilobytes,
+ pool size 1 terabytes and maximum number of thin provisioned devices and snapshots of 1000
+ in units of sectors with long output:
+ .sp
+diff --git a/man8/thin_repair.8 b/man8/thin_repair.8
+index 69cddea..1048de5 100644
+--- a/man8/thin_repair.8
++++ b/man8/thin_repair.8
+@@ -12,9 +12,18 @@ thin_repair \- repair thin provisioning binary metadata from device/file to devi
+ 
+ .SH DESCRIPTION
+ .B thin_repair
+-repairs binary thin provisioning metadata created by the
+-respective device-mapper target processing to another device or file.
+-If repaired to a metadata device, the metadata can be processed
++reads binary thin provisioning metadata created by the
++respective device-mapper target from one
++.I device
++or
++.I file
++, repairs it and writes it to another
++.I device
++or
++.I file.
++If written to a metadata
++.I device
++, the metadata can be processed
+ by the device-mapper target.
+ 
+ .IP "\fB\-i, \-\-input\fP \fI{device|file}\fP"
+@@ -30,10 +39,10 @@ Print help and exit.
+ Output version information and exit.
+ 
+ .SH EXAMPLE
+-Repairs the binary thin provisioning metadata on file
++Reads the binary thin provisioning metadata from file
+ .B metadata
+-to logical volume /dev/vg/metadata for further processing by the
+-respective device-mapper target:
++, repairs it and writes it to logical volume /dev/vg/metadata
++for further processing by the respective device-mapper target:
+ .sp
+ .B thin_repair -i metadata -o /dev/vg/metadata
+ 
+diff --git a/man8/thin_restore.8 b/man8/thin_restore.8
+index 8ab2976..dc7eb90 100644
+--- a/man8/thin_restore.8
++++ b/man8/thin_restore.8
+@@ -15,9 +15,14 @@ thin_restore \- restore thin provisioning metadata file to device or file
+ restores thin provisioning metadata created by the
+ respective device-mapper target dumped into an XML formatted (see
+ .BR thin_dump(8) )
+-file, which optionally can be preprocessed to another device or file.
+-If restored to a metadata device, the metadata can be processed
+-by the device-mapper target.
++.I file
++, which optionally can be preprocessed before the restore to another
++.I device
++or
++.I file.
++If restored to a metadata
++.I device
++, the metadata can be processed by the device-mapper target.
+ 
+ .IP "\fB\-i, \-\-input\fP \fI{device|file}\fP"
+ Input file or device with metadata.
+diff --git a/man8/thin_rmap.8 b/man8/thin_rmap.8
+index d68defb..4d74520 100644
+--- a/man8/thin_rmap.8
++++ b/man8/thin_rmap.8
+@@ -1,16 +1,20 @@
+ .TH THIN_DUMP 8 "Thin Provisioning Tools" "Red Hat, Inc." \" -*- nroff -*-
+ .SH NAME
+-thin_rmap \- output reverse map of a thin provisioned region of blocks
++thin_rmap \- output reverse map of a thin provisioned region of blocks from metadata device or file
+ 
+ .SH SYNOPSIS
+ .B thin_rmap
+ .RB [options]
+-.I {metadata device|file}
++.I {device|file}
+ 
+ .SH DESCRIPTION
+ .B thin_rmap
+-outputs the reverse mapping for a region of thin provisioned pool blocks
+-to the respective thin provisioned devices.
++outputs the reverse mapping stored in the metadata on a
++.I device
++or
++.I file
++between a region of thin provisioned pool blocks
++and the associated thin provisioned devices.
+ 
+ .IP "\fB\\-\-region\fP \fI<block range>\fP".
+ output reverse map
