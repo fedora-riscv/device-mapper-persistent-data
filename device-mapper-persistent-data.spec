@@ -49,7 +49,7 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
-* Tue Jul 29 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.2-1
+* Tue Jul 30 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.2-1
 - New upstream version
 - manual header fixes 
 
