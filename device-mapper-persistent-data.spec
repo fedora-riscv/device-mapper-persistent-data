@@ -3,20 +3,14 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.2.1
-Release: 5%{?dist}
+Version: 0.2.2
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
-Patch0: %{name}-0.2.1-nostrip.patch
-Patch1: %{name}-0.2.1-thin_dump-support-metadata-snap-block.patch
-Patch2: %{name}-0.2.1-new-thin_metadata_size.c.patch
-Patch3: %{name}-0.2.1-man-pages-new-thin_metadata_size-and-fixes.patch
-Patch4: %{name}-0.2.1-update-thin_metadata_size-man-page.patch
-Patch5: %{name}-0.2.1-support-thin_dump-default-metadata-snapshot.patch
-Patch6: %{name}-0.2.1-man-page-enhancements-and-typos.patch
+Patch0: device-mapper-persistent-data-0.2.2-man-pages-header.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -28,12 +22,6 @@ tools to manage device-mapper thin provisioning target metadata devices.
 %setup -q -n thin-provisioning-tools-%{version}
 echo %{version}-%{release} > VERSION
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 autoconf
@@ -61,6 +49,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Tue Jul 29 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.2-1
+- New upstream version
+
 * Thu Jul 25 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-5
 - enhance manual pages and fix typos
 
