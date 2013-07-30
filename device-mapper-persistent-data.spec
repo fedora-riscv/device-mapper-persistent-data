@@ -51,6 +51,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %changelog
 * Tue Jul 29 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.2-1
 - New upstream version
+- manual header fixes 
+
+* Tue Jul 30 2013 Petr Machata <pmachata@redhat.com> - 0.2.1-6
+- Rebuild for boost 1.54.0
 
 * Thu Jul 25 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-5
 - enhance manual pages and fix typos
