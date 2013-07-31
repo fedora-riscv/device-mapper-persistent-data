@@ -3,14 +3,13 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.2.2
-Release: 2%{?dist}
+Version: 0.2.3
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
-Patch0: device-mapper-persistent-data-0.2.2-man-pages-header.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -21,7 +20,6 @@ tools to manage device-mapper thin provisioning target metadata devices.
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
 echo %{version}-%{release} > VERSION
-%patch0 -p1
 
 %build
 autoconf
@@ -49,7 +47,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
-* Tue Jul 30 2013 Dennis Gilmore <dennis@ausil.us> - 0.2.2-1
+* Wed Jul 31 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.3-1
+- New upstream version
+
+* Tue Jul 30 2013 Dennis Gilmore <dennis@ausil.us> - 0.2.2-2
 - rebuild against boost 1.54.0
 
 * Tue Jul 30 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.2-1
