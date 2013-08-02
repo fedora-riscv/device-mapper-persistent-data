@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.2.1
+Version: 0.2.3
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -14,16 +14,18 @@ BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
 %description
-thin-provisioning-tools contains check,dump,restore,repair and rmap tools to
-manage device-mapper thin provisioning target metadata devices.
+thin-provisioning-tools contains check,dump,restore,repair,rmap and metadata_size
+tools to manage device-mapper thin provisioning target metadata devices or
+metadata on files.
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
+echo %{version}-%{release} > VERSION
 
 %build
 autoconf
-%configure
-make %{?_smp_mflags}
+%configure --with-optimisation=
+make %{?_smp_mflags} V=
 
 %install
 make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
@@ -32,16 +34,23 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 
 %files
 %doc COPYING README.md
-%{_mandir}/man8/thin_dump.8.gz
 %{_mandir}/man8/thin_check.8.gz
+%{_mandir}/man8/thin_dump.8.gz
+%{_mandir}/man8/thin_metadata_size.8.gz
+%{_mandir}/man8/thin_repair.8.gz
 %{_mandir}/man8/thin_restore.8.gz
-%{_sbindir}/thin_dump
+%{_mandir}/man8/thin_rmap.8.gz
 %{_sbindir}/thin_check
+%{_sbindir}/thin_dump
+%{_sbindir}/thin_metadata_size
 %{_sbindir}/thin_repair
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_rmap
 
 %changelog
+* Wed Jul 31 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.3-1
+- New upstream version
+
 * Fri Jul 12 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-1
 - New upstream version.
 
