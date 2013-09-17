@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.2.3
+Version: 0.2.7
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -48,6 +48,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Wed Jul 31 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.7-1
+- New upstream version 0.2.7
+
 * Wed Jul 31 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.3-1
 - New upstream version
 
