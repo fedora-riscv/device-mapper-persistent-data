@@ -11,6 +11,7 @@ URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-0.2.8-1-missing-man-pages.patch
+Patch1: device-mapper-persistent-data-0.2.8-1-missing-installs.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -27,6 +28,7 @@ to manage device-mapper cache metadata devices are included.
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1
+%patch1 -p1
 echo %{version}-%{release} > VERSION
 
 %build
