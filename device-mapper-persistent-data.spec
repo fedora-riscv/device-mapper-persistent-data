@@ -3,15 +3,13 @@
 #
 Summary: Device-mapper thin provisioning tools
 Name: device-mapper-persistent-data
-Version: 0.2.8
+Version: 0.3.0
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
-Patch0: device-mapper-persistent-data-0.2.8-1-missing-man-pages.patch
-Patch1: device-mapper-persistent-data-0.2.8-1-missing-installs.patch
 BuildRequires: autoconf, expat-devel, libstdc++-devel, boost-devel
 Requires: expat
 
@@ -23,12 +21,12 @@ Requires: expat
 thin-provisioning-tools contains check,dump,restore,repair,rmap
 and metadata_size tools to manage device-mapper thin provisioning
 target metadata devices; cache check,dump,restore and repair tools
-to manage device-mapper cache metadata devices are included.
+to manage device-mapper cache metadata devices are included and
+era array, check, detail, dump and invalidate to support
+snapshot eras
  
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
-%patch0 -p1
-%patch1 -p1
 echo %{version}-%{release} > VERSION
 
 %build
@@ -57,6 +55,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/cache_dump
 %{_sbindir}/cache_restore
 %{_sbindir}/cache_repair
+%{_sbindir}/era_check
+%{_sbindir}/era_dump
+%{_sbindir}/era_invalidate
 %{_sbindir}/thin_check
 %{_sbindir}/thin_dump
 %{_sbindir}/thin_metadata_size
@@ -65,6 +66,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Thu Mar 27 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.3.0-1
+- New upstream version 0.3.0 introducing era_{check,dump,invalidate}
+
 * Fri Oct 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.8-1
 - New upstream version 0.2.8 introducing cache_{check,dump,repair,restore}
 
