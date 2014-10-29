@@ -76,7 +76,6 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 - New upstream version
 - Manual header additions/fixes
 
-%changelog
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.3.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
