@@ -4,7 +4,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.4.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -14,6 +14,7 @@ BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
 Patch0: device-mapper-persistent-data-0.4.1-bz1085620.patch
 Patch1: device-mapper-persistent-data-0.4.1-missing-man-pages.patch
+Patch2: device-mapper-persistent-data-0.4.1-avoid-strip.patch
 
 %description
 thin-provisioning-tools contains check,dump,restore,repair,rmap
@@ -27,6 +28,7 @@ snapshot eras
 %setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 echo %{version}-%{release} > VERSION
 
 %build
@@ -72,6 +74,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Wed Nov 12 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-2
+- Resolves: bz#1159466
+
 * Tue Oct 28 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-1
 - New upstream version
 - Manual header additions/fixes
