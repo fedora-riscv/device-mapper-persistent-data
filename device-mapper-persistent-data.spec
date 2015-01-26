@@ -4,7 +4,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.4.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -74,6 +74,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_rmap
 
 %changelog
+* Mon Jan 26 2015 Petr Machata <pmachata@redhat.com> - 0.4.1-3
+- Rebuild for boost 1.57.0
+
 * Tue Oct 29 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-2
 - Resolves: bz#1159466
 
