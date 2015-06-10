@@ -1,20 +1,21 @@
 #
-# Copyright (C) 2011-2014 Red Hat, Inc
+# Copyright (C) 2011-2015 Red Hat, Inc
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.4.1
-Release: 4%{?dist}
+Version: 0.4.2
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.bz2
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.gz
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
+Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
+Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
+Patch2: device-mapper-persistent-avoid-strip.patch
+
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
-Patch0: device-mapper-persistent-data-0.4.1-bz1085620.patch
-Patch1: device-mapper-persistent-data-0.4.1-missing-man-pages.patch
-Patch2: device-mapper-persistent-data-0.4.1-avoid-strip.patch
 
 %description
 thin-provisioning-tools contains check,dump,restore,repair,rmap
@@ -26,9 +27,9 @@ snapshot eras
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0 -p1 -b .clear_needs_check_flag
+%patch1 -p1 -b .man_pages
+%patch2 -p1 -b .avoid_strip
 echo %{version}-%{release} > VERSION
 
 %build
@@ -51,11 +52,13 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_mandir}/man8/era_dump.8.gz
 %{_mandir}/man8/era_invalidate.8.gz
 %{_mandir}/man8/thin_check.8.gz
+%{_mandir}/man8/thin_delta.8.gz
 %{_mandir}/man8/thin_dump.8.gz
 %{_mandir}/man8/thin_metadata_size.8.gz
 %{_mandir}/man8/thin_restore.8.gz
 %{_mandir}/man8/thin_repair.8.gz
 %{_mandir}/man8/thin_rmap.8.gz
+%{_mandir}/man8/thin_trim.8.gz
 %{_sbindir}/pdata_tools
 %{_sbindir}/cache_check
 %{_sbindir}/cache_dump
@@ -67,23 +70,29 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/era_restore
 %{_sbindir}/era_invalidate
 %{_sbindir}/thin_check
+%{_sbindir}/thin_delta
 %{_sbindir}/thin_dump
 %{_sbindir}/thin_metadata_size
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_repair
 %{_sbindir}/thin_rmap
+%{_sbindir}/thin_trim
 
 %changelog
+* Mon Jun 08 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.4.2-1
+- New thin_delta and thin_trim commands.
+- Update to latest upstream release.
+
 * Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 0.4.1-4
 - Rebuilt for GCC 5 C++11 ABI change
 
 * Mon Jan 26 2015 Petr Machata <pmachata@redhat.com> - 0.4.1-3
 - Rebuild for boost 1.57.0
 
-* Tue Oct 29 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-2
+* Wed Oct 29 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-2
 - Resolves: bz#1159466
 
-* Tue Oct 29 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-1
+* Wed Oct 29 2014 Heinz Mauelshagen <heinzm@redhat.com> - 0.4.1-1
 - New upstream version
 - Manual header additions/fixes
 
@@ -124,7 +133,7 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 * Thu Jul 25 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-5
 - enhance manual pages and fix typos
 
-* Fri Jul 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-4
+* Thu Jul 18 2013 Heinz Mauelshagen <heinzm@redhat.com> - 0.2.1-4
 - Update thin_metadata_size manual page
 - thin_dump: support dumping default metadata snapshot
 
