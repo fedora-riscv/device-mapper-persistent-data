@@ -8,7 +8,7 @@ Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-v%{version}.tar.gz
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}.tar.gz
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
