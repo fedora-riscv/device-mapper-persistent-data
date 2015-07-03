@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.1
+Version: 0.5.2
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -79,6 +79,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Fri Jul 03 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.2-1
+- Fix bug in damage reporting in thin_dump and thin_check.
+
 * Thu Jun 25 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.1-1
 - Fix crash if tools are given a very large metadata device to restore to.
 
