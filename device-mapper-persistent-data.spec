@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.2
+Version: 0.5.3
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -79,6 +79,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Fri Jul 03 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.3-1
+- Tools now open the metadata device in O_EXCL mode to stop
+  running the tools on active metadata.
+
 * Fri Jul 03 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.2-1
 - Fix bug in damage reporting in thin_dump and thin_check.
 
