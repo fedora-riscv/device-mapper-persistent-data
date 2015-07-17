@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.3
+Version: 0.5.4
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -13,6 +13,7 @@ Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provi
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
 Patch2: device-mapper-persistent-avoid-strip.patch
+Patch3: device-mapper-persistent-data-fix-cache-check-exclusive-open.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -30,6 +31,7 @@ snapshot eras
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
 %patch2 -p1 -b .avoid_strip
+%patch3 -p1 -b .cache_check_excl
 echo %{version}-%{release} > VERSION
 
 %build
@@ -79,6 +81,11 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Fri Jul 17 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.4-1
+- Fix cache_check with --clear-needs-check-flag option to
+  make sure metadata device is not open already by the tool
+  when open with O_EXCL mode is requested.
+
 * Fri Jul 03 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.3-1
 - Tools now open the metadata device in O_EXCL mode to stop
   running the tools on active metadata.
