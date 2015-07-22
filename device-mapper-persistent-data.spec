@@ -4,7 +4,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.5.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -81,6 +81,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Wed Jul 22 2015 David Tardon <dtardon@redhat.com> - 0.5.4-2
+- rebuild for Boost 1.58
+
 * Fri Jul 17 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.4-1
 - Fix cache_check with --clear-needs-check-flag option to
   make sure metadata device is not open already by the tool
