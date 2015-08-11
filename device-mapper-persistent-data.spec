@@ -4,7 +4,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.5.4
-Release: 3%{?dist}
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
