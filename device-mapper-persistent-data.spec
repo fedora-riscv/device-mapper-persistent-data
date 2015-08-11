@@ -81,7 +81,7 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
-* Fri Jul 17 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.4-1
+* Tue Aug 11 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.4-1
 - Fix cache_check with --clear-needs-check-flag option to
   make sure metadata device is not open already by the tool
   when open with O_EXCL mode is requested.
