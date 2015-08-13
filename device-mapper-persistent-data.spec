@@ -3,8 +3,8 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.4
-Release: 3%{?dist}
+Version: 0.5.5
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -13,7 +13,6 @@ Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provi
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
 Patch2: device-mapper-persistent-avoid-strip.patch
-Patch3: device-mapper-persistent-data-fix-cache-check-exclusive-open.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -31,7 +30,6 @@ snapshot eras
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
 %patch2 -p1 -b .avoid_strip
-%patch3 -p1 -b .cache_check_excl
 echo %{version}-%{release} > VERSION
 
 %build
@@ -81,6 +79,11 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Thu Aug 13 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.5-1
+- Support thin_delta's --metadata_snap option without specifying snap location.
+- Update man pages to make it clearer that tools shoulnd't be run on live metadata.
+- Fix bugs in the metadata reference counting for thin_check.
+
 * Wed Jul 29 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.4-3
 - Rebuilt for https://fedoraproject.org/wiki/Changes/F23Boost159
 
