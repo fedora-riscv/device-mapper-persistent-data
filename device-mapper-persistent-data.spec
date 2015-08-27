@@ -4,7 +4,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.5.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -79,6 +79,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Thu Aug 27 2015 Jonathan Wakely <jwakely@redhat.com> - 0.5.5-2
+- Rebuilt for Boost 1.59
+
 * Thu Aug 13 2015 Peter Rajnoha <prajnoha@redhat.com> - 0.5.5-1
 - Support thin_delta's --metadata_snap option without specifying snap location.
 - Update man pages to make it clearer that tools shoulnd't be run on live metadata.
