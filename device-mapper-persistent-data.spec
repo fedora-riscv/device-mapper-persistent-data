@@ -3,7 +3,7 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.6
+Version: 0.6.0
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -12,7 +12,6 @@ Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provi
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
-Patch2: device-mapper-persistent-avoid-strip.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -29,7 +28,6 @@ snapshot eras
 %setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
-%patch2 -p1 -b .avoid_strip
 echo %{version}-%{release} > VERSION
 
 %build
@@ -79,6 +77,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Wed Jan 20 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.0-1
+- New thin_ls command.
+
 * Wed Jan 20 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.5.6-1
 - era_invalidate may be run on live metadata if the --metadata-snap
   option is given.
