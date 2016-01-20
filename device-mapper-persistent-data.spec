@@ -3,8 +3,8 @@
 #
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.5.5
-Release: 3%{?dist}
+Version: 0.5.6
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -79,6 +79,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Wed Jan 20 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.5.6-1
+- era_invalidate may be run on live metadata if the --metadata-snap
+  option is given.
+
 * Fri Jan 15 2016 Jonathan Wakely <jwakely@redhat.com> - 0.5.5-3
 - Rebuilt for Boost 1.60
 
