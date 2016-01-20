@@ -12,6 +12,7 @@ Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provi
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
+Patch2: device-mapper-persistent-data-avoid-strip.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -28,6 +29,7 @@ snapshot eras
 %setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
+%patch2 -p1 -b .avoid_strip
 echo %{version}-%{release} > VERSION
 
 %build
@@ -52,6 +54,7 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_mandir}/man8/thin_check.8.gz
 %{_mandir}/man8/thin_delta.8.gz
 %{_mandir}/man8/thin_dump.8.gz
+%{_mandir}/man8/thin_ls.8.gz
 %{_mandir}/man8/thin_metadata_size.8.gz
 %{_mandir}/man8/thin_restore.8.gz
 %{_mandir}/man8/thin_repair.8.gz
@@ -70,6 +73,7 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_check
 %{_sbindir}/thin_delta
 %{_sbindir}/thin_dump
+%{_sbindir}/thin_ls
 %{_sbindir}/thin_metadata_size
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_repair
