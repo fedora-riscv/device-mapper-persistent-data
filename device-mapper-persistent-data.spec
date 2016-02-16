@@ -1,14 +1,18 @@
 #
-# Copyright (C) 2011-2015 Red Hat, Inc
+# Copyright (C) 2011-2016 Red Hat, Inc
 #
+
+%define pre_release_upstream -rc3
+%define pre_release rc3
+
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.6.0
-Release: 2%{?dist}
+Version: 0.6.2
+Release: 0.1.%{pre_release}%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}.tar.gz
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}%{pre_release_upstream}.tar.gz
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
@@ -26,7 +30,7 @@ are included and era check, dump, restore and invalidate to manage
 snapshot eras
 
 %prep
-%setup -q -n thin-provisioning-tools-%{version}
+%setup -q -n thin-provisioning-tools-%{version}%{pre_release_upstream}
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
 %patch2 -p1 -b .avoid_strip
@@ -81,6 +85,13 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Mon Feb 15 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc3
+- Fix recent regression in thin_repair.
+- Force g++-98 dialect.
+
+* Mon Feb 15 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc1
+- Fix bug in thin_dump when using metadata snaps.
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
