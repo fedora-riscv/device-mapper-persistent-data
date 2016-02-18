@@ -2,8 +2,8 @@
 # Copyright (C) 2011-2016 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc4
-%define pre_release rc4
+%define pre_release_upstream -rc5
+%define pre_release rc5
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
@@ -85,6 +85,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Thu Feb 18 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc5
+- Fixes for thin_delta.
+
 * Mon Feb 15 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc4
 - Fix bug in mapping comparison while using thin_delta.
 
