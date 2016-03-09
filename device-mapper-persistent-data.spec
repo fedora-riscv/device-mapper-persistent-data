@@ -2,8 +2,8 @@
 # Copyright (C) 2011-2016 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc5
-%define pre_release rc5
+%define pre_release_upstream -rc6
+%define pre_release rc6
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
@@ -85,6 +85,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Wed Mar 09 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc6
+- Add new fields to thin_ls: MAPPED_BYTES, EXCLUSIVE_BYTES and SHARED_BYTES.
+
 * Tue Mar 08 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc5
 - New thin_ls command.
 - era_invalidate may be run on live metadata if the --metadata-snap
