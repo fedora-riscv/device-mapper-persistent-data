@@ -2,8 +2,8 @@
 # Copyright (C) 2011-2016 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc7
-%define pre_release rc7
+%define pre_release_upstream -rc8
+%define pre_release rc8
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
@@ -85,6 +85,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Mon Apr 11 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc8
+- Fixes for thin_trim.
+
 * Tue Mar 22 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc7
 - Fixes for thin_repair.
 
