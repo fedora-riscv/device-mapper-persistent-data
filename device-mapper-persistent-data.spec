@@ -2,17 +2,14 @@
 # Copyright (C) 2011-2016 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc8
-%define pre_release rc8
-
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.6.2
-Release: 0.1.%{pre_release}%{?dist}
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}%{pre_release_upstream}.tar.gz
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}.tar.gz
 # Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
@@ -30,7 +27,7 @@ are included and era check, dump, restore and invalidate to manage
 snapshot eras
 
 %prep
-%setup -q -n thin-provisioning-tools-%{version}%{pre_release_upstream}
+%setup -q -n thin-provisioning-tools-%{version}
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
 %patch2 -p1 -b .avoid_strip
@@ -85,6 +82,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Mon Jul 11 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-1
+- Fixes providing proper use of compiler flags.
+
 * Mon Apr 11 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-0.1.rc8
 - Fixes for thin_trim.
 
