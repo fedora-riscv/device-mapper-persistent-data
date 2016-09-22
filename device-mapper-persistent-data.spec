@@ -4,7 +4,7 @@
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.6.2
+Version: 0.6.3
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -82,6 +82,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Thu Sep 22 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.3-1
+- Preallocate output file for thin_repair and thin_restore.
+
 * Mon Jul 11 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.2-1
 - Fixes providing proper use of compiler flags.
 
