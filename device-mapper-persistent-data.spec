@@ -5,7 +5,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.6.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -82,6 +82,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_trim
 
 %changelog
+* Fri Jan 27 2017 Jonathan Wakely <jwakely@redhat.com> - 0.6.3-2
+- Rebuilt for Boost 1.63
+
 * Thu Sep 22 2016 Peter Rajnoha <prajnoha@redhat.com> - 0.6.3-1
 - Preallocate output file for thin_repair and thin_restore.
 
