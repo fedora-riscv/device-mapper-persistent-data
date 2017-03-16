@@ -2,8 +2,8 @@
 # Copyright (C) 2011-2017 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc2
-%define pre_release rc2
+%define pre_release_upstream -rc3
+%define pre_release rc3
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
@@ -17,7 +17,6 @@ Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provi
 Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
 Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
 Patch2: device-mapper-persistent-data-avoid-strip.patch
-Patch3: device-mapper-persistent-data-fix-missing-includes.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -35,7 +34,6 @@ snapshot eras
 %patch0 -p1 -b .clear_needs_check_flag
 %patch1 -p1 -b .man_pages
 %patch2 -p1 -b .avoid_strip
-%patch3 -p1 -b .includes
 echo %{version}-%{release} > VERSION
 
 %build
@@ -90,6 +88,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_show_duplicates
 
 %changelog
+* Thu Mar 16 2017 Peter Rajnoha <prajnoha@redhat.com> - 0.7.0-0.1-rc3
+- Fix compilation warnings and further code cleanup.
+
 * Thu Mar 09 2017 Peter Rajnoha <prajnoha@redhat.com> - 0.7.0-0.1-rc2
 - Update to latest upstream release including various bug fixes and new features.
 - New thin_show_duplicates command.
