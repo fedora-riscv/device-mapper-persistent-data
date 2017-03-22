@@ -2,8 +2,8 @@
 # Copyright (C) 2011-2017 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc4
-%define pre_release rc4
+%define pre_release_upstream -rc5
+%define pre_release rc5
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
@@ -88,6 +88,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_show_duplicates
 
 %changelog
+* Wed Mar 22 2017 Peter Rajnoha <prajnoha@redhat.com> - 0.7.0-0.1-rc5
+- Switch to a faster implementation of crc32 used for checksums.
+
 * Tue Mar 21 2017 Peter Rajnoha <prajnoha@redhat.com> - 0.7.0-0.1-rc4
 - Add support for cache metadata format version 2 in cache tools.
 
