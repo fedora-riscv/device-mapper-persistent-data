@@ -8,7 +8,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.7.0
-Release: 0.1.%{pre_release}%{?dist}
+Release: 0.2.%{pre_release}%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -88,6 +88,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_show_duplicates
 
 %changelog
+* Mon May 15 2017 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.0-0.2.rc6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_27_Mass_Rebuild
+
 * Mon Mar 27 2017 Peter Rajnoha <prajnoha@redhat.com> - 0.7.0-0.1-rc6
 - Don't open devices as writeable if --clear-needs-check-flag is not set.
 - Fix cache metadata format version 2 superblock packing.
