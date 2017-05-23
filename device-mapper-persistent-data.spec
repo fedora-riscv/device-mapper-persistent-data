@@ -88,6 +88,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue May 23 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.0-0.3.rc6
+- Rebuilt for mass rebuild incorrectly tagging master to .fc26
+
 * Mon May 15 2017 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.0-0.2.rc6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_27_Mass_Rebuild
 
