@@ -8,7 +8,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.7.0
-Release: 0.3.%{pre_release}%{?dist}
+Release: 0.4.%{pre_release}%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -88,6 +88,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_show_duplicates
 
 %changelog
+* Mon Jul 03 2017 Jonathan Wakely <jwakely@redhat.com> - 0.7.0-0.4.rc6
+- Rebuilt for Boost 1.64
+
 * Tue May 23 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.0-0.3.rc6
 - Rebuilt for mass rebuild incorrectly tagging master to .fc26
 
