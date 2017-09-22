@@ -2,21 +2,16 @@
 # Copyright (C) 2011-2017 Red Hat, Inc
 #
 
-%define pre_release_upstream -rc6
-%define pre_release rc6
-
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.7.0
-Release: 0.6.%{pre_release}%{?dist}
+Version: 0.7.2
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%{version}%{pre_release_upstream}.tar.gz
-# Source1: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
-Patch0: device-mapper-persistent-data-document-clear-needs-check-flag.patch
-Patch1: device-mapper-persistent-data-add-era_restore-and-cache_metadata_size-man-pages.patch
-Patch2: device-mapper-persistent-data-avoid-strip.patch
+#Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-% {version}.tar.gz
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
+Patch0: device-mapper-persistent-data-avoid-strip.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
 Requires: expat
@@ -30,10 +25,8 @@ are included and era check, dump, restore and invalidate to manage
 snapshot eras
 
 %prep
-%setup -q -n thin-provisioning-tools-%{version}%{pre_release_upstream}
-%patch0 -p1 -b .clear_needs_check_flag
-%patch1 -p1 -b .man_pages
-%patch2 -p1 -b .avoid_strip
+%setup -q -n thin-provisioning-tools-%{version}
+%patch0 -p1 -b .avoid_strip
 echo %{version}-%{release} > VERSION
 
 %build
@@ -50,12 +43,14 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %doc COPYING README.md
 %{_mandir}/man8/cache_check.8.gz
 %{_mandir}/man8/cache_dump.8.gz
+%{_mandir}/man8/cache_metadata_size.8.gz
 %{_mandir}/man8/cache_repair.8.gz
 %{_mandir}/man8/cache_restore.8.gz
 %{_mandir}/man8/cache_writeback.8.gz
 %{_mandir}/man8/era_check.8.gz
 %{_mandir}/man8/era_dump.8.gz
 %{_mandir}/man8/era_invalidate.8.gz
+%{_mandir}/man8/era_restore.8.gz
 %{_mandir}/man8/thin_check.8.gz
 %{_mandir}/man8/thin_delta.8.gz
 %{_mandir}/man8/thin_dump.8.gz
@@ -85,9 +80,16 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_rmap
 %{_sbindir}/thin_trim
-%{_sbindir}/thin_show_duplicates
+#% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Fri Sep 22 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.2-1
+- Update to latest upstream release including various bug fixes and new features.
+- Fix segfault when dump tools are given a tiny metadata file.
+- Fix -V exiting with 1.
+- Fix thin_check when running on XML dump instead of binary data.
+- Speed up free block searching.
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.7.0-0.6.rc6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
