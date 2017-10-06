@@ -4,7 +4,7 @@
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.7.2
+Version: 0.7.3
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -83,6 +83,11 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Fri Oct 06 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.3-1
+- Update to latest bugfix and documentation update release.
+- *_restore tools wipe superblock as a last resort.
+- Add thin_check --override-mapping-root.
+
 * Fri Sep 22 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.2-1
 - Update to latest upstream release including various bug fixes and new features.
 - Fix segfault when dump tools are given a tiny metadata file.
