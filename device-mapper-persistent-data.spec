@@ -4,7 +4,7 @@
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.7.3
+Version: 0.7.5
 Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Base
@@ -83,6 +83,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue Nov 14 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.5-1
+- Fix version 2 metadata corruption in cache_restore.
+
 * Fri Oct 06 2017 Marian Csontos <mcsontos@redhat.com> - 0.7.3-1
 - Update to latest bugfix and documentation update release.
 - *_restore tools wipe superblock as a last resort.
