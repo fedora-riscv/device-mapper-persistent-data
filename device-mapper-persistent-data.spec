@@ -13,7 +13,7 @@ URL: https://github.com/jthornber/thin-provisioning-tools
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
 Patch0: device-mapper-persistent-data-avoid-strip.patch
 
-BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel
+BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel, gcc-c++
 Requires: expat
 
 %description
