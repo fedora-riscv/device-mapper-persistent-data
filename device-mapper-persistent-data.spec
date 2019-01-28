@@ -7,7 +7,6 @@ Name: device-mapper-persistent-data
 Version: 0.7.6
 Release: 3%{?dist}
 License: GPLv3+
-Group: System Environment/Base
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-% {version}.tar.gz
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
