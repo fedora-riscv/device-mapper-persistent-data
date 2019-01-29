@@ -36,8 +36,6 @@ make %{?_smp_mflags} V=
 %install
 make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 
-%clean
-
 %files
 %doc COPYING README.md
 %{_mandir}/man8/cache_check.8.gz
