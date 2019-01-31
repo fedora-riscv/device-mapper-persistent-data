@@ -5,7 +5,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.7.6
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-% {version}.tar.gz
@@ -80,6 +80,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.7.6-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Fri Jan 25 2019 Jonathan Wakely <jwakely@redhat.com> - 0.7.6-3
 - Rebuilt for Boost 1.69
 
