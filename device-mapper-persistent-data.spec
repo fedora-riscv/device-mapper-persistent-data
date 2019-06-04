@@ -4,7 +4,7 @@
 
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.8.1
+Version: 0.8.5
 Release: 1%{?dist}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -80,6 +80,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue Jun 04 2019 Marian Csontos <mcsontos@redhat.com> - 0.8.5-1
+- Update to latest upstream version
+
 * Sat May 04 2019 Marian Csontos <mcsontos@redhat.com> - 0.8.1-1
 - Fix thin_repair should not require --repair option.
 
