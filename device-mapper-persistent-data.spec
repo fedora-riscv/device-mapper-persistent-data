@@ -2,18 +2,27 @@
 # Copyright (C) 2011-2017 Red Hat, Inc
 #
 
+#%%global version_suffix -rc2
+%global release_suffix .test2
+
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
-Version: 0.8.5
-Release: 1%{?dist}
+Version: 0.9.0
+Release: 0.2%{?dist}%{?release_suffix}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
-#Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-% {version}.tar.gz
-Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}.tar.gz
+#Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%%{version}.tar.gz
+Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}%{version_suffix}.tar.gz
 Patch0: device-mapper-persistent-data-avoid-strip.patch
+Patch1: 0001-Update-dependencies.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel, gcc-c++
 Requires: expat
+%ifarch %{rust_arches}
+BuildRequires: rust-packaging
+BuildRequires: rust >= 1.35
+BuildRequires: cargo
+%endif
 
 %description
 thin-provisioning-tools contains check,dump,restore,repair,rmap
@@ -24,17 +33,32 @@ are included and era check, dump, restore and invalidate to manage
 snapshot eras
 
 %prep
-%setup -q -n thin-provisioning-tools-%{version}
+%setup -q -n thin-provisioning-tools-%{version}%{version_suffix}
+%ifarch %{rust_arches}
+%cargo_prep
+%endif
 %patch0 -p1 -b .avoid_strip
+%patch1 -p1 -b .toml_update
 echo %{version}-%{release} > VERSION
+
+%generate_buildrequires
+%cargo_generate_buildrequires
 
 %build
 autoconf
 %configure --with-optimisation=
 make %{?_smp_mflags} V=
+%ifarch %{rust_arches}
+%cargo_build
+%endif
 
 %install
 make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
+%ifarch %{rust_arches}
+make DESTDIR=%{buildroot} MANDIR=%{_mandir} install-rust-tools
+# cargo_install installs into /usr/bin
+#%%cargo_install
+%endif
 
 %files
 %doc COPYING README.md
@@ -57,6 +81,10 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_mandir}/man8/thin_restore.8.gz
 %{_mandir}/man8/thin_rmap.8.gz
 %{_mandir}/man8/thin_trim.8.gz
+%ifarch %{rust_arches}
+%{_mandir}/man8/thin_metadata_pack.8.gz
+%{_mandir}/man8/thin_metadata_unpack.8.gz
+%endif
 %{_sbindir}/pdata_tools
 %{_sbindir}/cache_check
 %{_sbindir}/cache_dump
@@ -77,9 +105,17 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 %{_sbindir}/thin_restore
 %{_sbindir}/thin_rmap
 %{_sbindir}/thin_trim
+%ifarch %{rust_arches}
+%{_sbindir}/thin_metadata_pack
+%{_sbindir}/thin_metadata_unpack
+%endif
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue Sep 01 2020 Marian Csontos <mcsontos@redhat.com> - 0.9.0-0.2
+- Update to latest upstream version
+- New tools thin_metadata_pack and thin_metadata_unpack
+
 * Tue Jun 04 2019 Marian Csontos <mcsontos@redhat.com> - 0.8.5-1
 - Update to latest upstream version
 
