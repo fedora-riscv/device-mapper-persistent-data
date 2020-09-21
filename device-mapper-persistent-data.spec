@@ -8,14 +8,14 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.9.0
-Release: 1%{?dist}%{?release_suffix}
+Release: 2%{?dist}%{?release_suffix}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%%{version}.tar.gz
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}%{?version_suffix}.tar.gz
-Source1: dmpd090-vendor.tar.gz
+Source1: dmpd090-vendor2.tar.gz
 Patch0: device-mapper-persistent-data-avoid-strip.patch
-#Patch1: 0001-Update-dependencies.patch
+Patch1: 0001-Update-dependencies.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel, gcc-c++
 Requires: expat
@@ -36,7 +36,7 @@ snapshot eras
 %prep
 %setup -q -n thin-provisioning-tools-%{version}%{?version_suffix}
 %ifarch %{rust_arches}
-#%%patch1 -p1 -b .toml_update
+%patch1 -p1 -b .toml_update
 #%%cargo_prep
 #%%cargo_generate_buildrequires
 tar xf %{SOURCE1}
@@ -123,6 +123,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install-rust-tools
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Mon Sep 21 2020 Marian Csontos <mcsontos@redhat.com> - 0.9.0-2
+- Update crc32c to version 0.5 supporting non x86 architectures
+
 * Thu Sep 17 2020 Marian Csontos <mcsontos@redhat.com> - 0.9.0-1
 - Update to latest upstream version
 - New tools thin_metadata_pack and thin_metadata_unpack
