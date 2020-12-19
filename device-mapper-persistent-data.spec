@@ -24,6 +24,7 @@ BuildRequires: rust-packaging
 BuildRequires: rust >= 1.35
 BuildRequires: cargo
 %endif
+BuildRequires: make
 
 %description
 thin-provisioning-tools contains check,dump,restore,repair,rmap
