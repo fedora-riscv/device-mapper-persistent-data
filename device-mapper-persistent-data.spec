@@ -8,7 +8,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.9.0
-Release: 2%{?dist}%{?release_suffix}
+Release: 3%{?dist}%{?release_suffix}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%%{version}.tar.gz
@@ -124,6 +124,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install-rust-tools
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Mon Sep 21 2020 Marian Csontos <mcsontos@redhat.com> - 0.9.0-2
 - Update crc32c to version 0.5 supporting non x86 architectures
 
