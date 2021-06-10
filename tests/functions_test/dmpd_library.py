@@ -23,6 +23,9 @@ import sys, os
 import subprocess
 import time
 import fileinput
+# TODO: Is this really necessary? Unlikely we will run into python2 in rawhide
+# again...
+from __future__ import print_function
 
 
 def _print(string):
@@ -1042,7 +1045,7 @@ class LoopDev:
                     _print("WARN: Could not create loop device image file")
                     return ret_fail
             except OSError as e:
-                print >> sys.err, "command failed: ", e
+                print("command failed: ", e, file=sys.err)
                 return ret_fail
 
         loop_path = self._get_loop_path(name)
@@ -1125,7 +1128,7 @@ class LoopDev:
             name = self._standardize_name(name)
 
             # Just try to detach if device is connected, otherwise ignore
-            # print "INFO: Checking if ", loop_path, " exists, to be detached"
+            # print("INFO: Checking if ", loop_path, " exists, to be detached")
             dev_path = self._get_loop_path(name)
             if dev_path in devs:
                 cmd = "losetup -d %s" % dev_path
@@ -1199,7 +1202,7 @@ class LVM:
         cmd = "vgcreate %s %s %s" % (options, vg_name, pv_name)
         retcode = run(cmd, verbose=verbose)
         if (retcode != 0):
-            # _print ("WARN: Could not create %s" % vg_name)
+            # _print("WARN: Could not create %s" % vg_name)
             return False
         return True
 
@@ -1321,7 +1324,7 @@ class LVM:
         cmd = "lvcreate %s %s -n %s" % (" ".join(str(i) for i in options), vg_name, lv_name)
         retcode = run(cmd, verbose=verbose)
         if (retcode != 0):
-            # _print ("WARN: Could not create %s" % lv_name)
+            # _print("WARN: Could not create %s" % lv_name)
             return False
         return True
 
@@ -1514,7 +1517,7 @@ class DMPD:
                 _print("WARN: Could not create file to %s metadata to." % command_message)
                 return False
         except OSError as e:
-            print >> sys.err, "command failed: ", e
+            print("command failed: ", e, file=sys.err)
             return False
         return True
 

@@ -195,7 +195,7 @@ def thin_clean(args):
 
 def thin_test(args):
     print("\n#######################################\n")
-    print (
+    print(
         "INFO: Testing thin tools runtime provided by device_mapper_persistent_data")
 
     errors = []
@@ -415,7 +415,7 @@ def thin_test(args):
 
 def thin_errors_test(args):
     print("\n#######################################\n")
-    print (
+    print(
         "INFO: Testing thin tools errors provided by device_mapper_persistent_data")
 
     errors = []
@@ -845,7 +845,7 @@ def cache_clean(args):
 
 def cache_test(args):
     print("\n#######################################\n")
-    print ("INFO: Testing cache tools runtime provided by device_mapper_persistent_data")
+    print("INFO: Testing cache tools runtime provided by device_mapper_persistent_data")
 
     errors = []
 
@@ -965,7 +965,7 @@ def cache_test(args):
 
 def cache_errors_test(args):
     print("\n#######################################\n")
-    print ("INFO: Testing cache tools errors provided by device_mapper_persistent_data")
+    print("INFO: Testing cache tools errors provided by device_mapper_persistent_data")
 
     errors = []
 
@@ -1223,10 +1223,10 @@ def main():
     cache_clean(args)
 
     if not TC.tend():
-        print "FAIL: test failed"
+        print("FAIL: test failed")
         sys.exit(1)
 
-    print "PASS: Test pass"
+    print("PASS: Test pass")
     sys.exit(0)
 
 

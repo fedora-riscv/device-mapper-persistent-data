@@ -20,19 +20,19 @@ import sys
 import re
 
 def run(cmd):
-    print "INFO: Running '%s'..." % cmd
+    print("INFO: Running '%s'..." % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     stdout, stderr = p.communicate()
 
     retcode = p.returncode
     output = stdout + stderr
-    print output
+    print(output)
     return retcode, output
 
 def start_test():
 
     #if uses any library linked to /usr this my affect the tools during boot
-    print ("INFO: Making sure tools provided by device-mapper-persistent-data "
+    print("INFO: Making sure tools provided by device-mapper-persistent-data "
            "are not linked to /usr")
 
     #Paths where we should have no libraries linked from
@@ -54,7 +54,7 @@ def start_test():
             continue
         tool_error = 0
         for lib_path in lib_paths:
-            print "INFO: Checking if %s is not linked to libraries at %s" % (tool, lib_path)
+            print("INFO: Checking if %s is not linked to libraries at %s" % (tool, lib_path))
             ret, linked_lib = run("ldd %s" % tool)
             if ret != 0:
                 print("FAIL: Could not list dynamically libraries for %s" % (tool))
@@ -83,10 +83,10 @@ def start_test():
 def main():
 
     if not start_test():
-        print "FAIL: test failed"
+        print("FAIL: test failed")
         sys.exit(1)
 
-    print "PASS: Test pass"
+    print("PASS: Test pass")
     sys.exit(0)
 
 main()
