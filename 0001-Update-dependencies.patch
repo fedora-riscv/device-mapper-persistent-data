@@ -16,7 +16,7 @@ index 892ea4c..93fc807 100644
  byteorder = "1.3"
  clap = "2.33"
 -crc32c = "0.4"
-+crc32c = "0.5"
++crc32c = "0.6"
  flate2 = "1.0"
  fixedbitset = "0.3"
  libc = "0.2.71"

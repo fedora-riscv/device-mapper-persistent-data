@@ -8,12 +8,12 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.9.0
-Release: 5%{?dist}%{?release_suffix}
+Release: 6%{?dist}%{?release_suffix}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%%{version}.tar.gz
 Source0: https://github.com/jthornber/thin-provisioning-tools/archive/v%{version}%{?version_suffix}.tar.gz
-Source1: dmpd090-vendor2.tar.gz
+Source1: dmpd090-vendor3.tar.gz
 Patch0: device-mapper-persistent-data-avoid-strip.patch
 Patch1: 0001-Update-dependencies.patch
 Patch2: 0001-all-Fix-resource-leaks.patch
@@ -28,6 +28,8 @@ Patch10: 0009-build-Remove-unused-sources-from-the-regular-build.patch
 Patch11: 0010-all-Remove-unreachable-code.patch
 Patch12: 0011-file_utils-Fix-resource-leak.patch
 Patch13: 0012-thin_delta-Clean-up-duplicated-code.patch
+Patch14: 0013-build-Remove-lboost_iostreams-linker-flag.patch
+Patch15: 0014-cargo-update.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel, gcc-c++
 Requires: expat
@@ -50,6 +52,7 @@ snapshot eras
 %setup -q -n thin-provisioning-tools-%{version}%{?version_suffix}
 %ifarch %{rust_arches}
 %patch1 -p1 -b .toml_update
+%patch15 -p1 -b .backup15
 #%%cargo_prep
 #%%cargo_generate_buildrequires
 tar xf %{SOURCE1}
@@ -76,6 +79,8 @@ END
 %patch11 -p1 -b .backup11
 %patch12 -p1 -b .backup12
 %patch13 -p1 -b .backup13
+%patch14 -p1 -b .backup14
+# NOTE: patch 15 is above at the rust setup
 echo %{version}-%{release} > VERSION
 
 %generate_buildrequires
@@ -148,6 +153,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install-rust-tools
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Thu Jul 22 2021 Marian Csontos <mcsontos@redhat.com> - 0.9.0-6
+- Fix rust-1.53 compilation issues.
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
