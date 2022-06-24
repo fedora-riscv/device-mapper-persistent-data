@@ -1280,7 +1280,7 @@ class LVM:
                 _print("WARN: (%s) does not match lvs output format" % lv)
                 continue
             lv_info_dict = {}
-            for index in xrange(len(param_names)):
+            for index in range(len(param_names)):
                 lv_info_dict[param_names[index]] = m.group(index + 1)
             lv_list.append(lv_info_dict)
 
