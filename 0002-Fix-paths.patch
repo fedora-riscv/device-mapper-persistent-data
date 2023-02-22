@@ -1,0 +1,30 @@
+From 26571db5911e6a85e13965d0359799537ac4ce54 Mon Sep 17 00:00:00 2001
+From: Marian Csontos <mcsontos@redhat.com>
+Date: Thu, 23 Feb 2023 12:11:16 +0100
+Subject: [PATCH] Fix paths
+
+Use PREFIX instead of DESTDIR. DESTDIR is used for things like BUILDROOT
+---
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0286000b..92c6d325 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,9 +6,9 @@ PDATA_TOOLS=\
+ $(PDATA_TOOLS):
+ 	$(V) cargo build --release
+ 
+-DESTDIR:=/usr
+-BINDIR:=$(DESTDIR)/sbin
+-DATADIR:=$(DESTDIR)/share
++PREFIX:=/usr
++BINDIR:=$(DESTDIR)$(PREFIX)/sbin
++DATADIR:=$(DESTDIR)$(PREFIX)/share
+ MANPATH:=$(DATADIR)/man
+ 
+ STRIP:=strip
+-- 
+2.39.2
+

@@ -1,0 +1,40 @@
+From 3d67b5c78f350db25e028112105014b09c2b34b3 Mon Sep 17 00:00:00 2001
+From: Marian Csontos <mcsontos@redhat.com>
+Date: Wed, 22 Feb 2023 18:07:57 +0100
+Subject: [PATCH] Tweak cargo.toml to work with vendor directory
+
+---
+ Cargo.lock | 2 +-
+ Cargo.toml | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Cargo.lock b/Cargo.lock
+index 4ff194a7..a4a56d75 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -973,7 +973,7 @@ checksum = "222a222a5bfe1bba4a77b45ec488a741b3cb8872e5e499451fd7d0129c9c7c3d"
+ 
+ [[package]]
+ name = "thinp"
+-version = "0.1.0"
++version = "1.0.2"
+ dependencies = [
+  "anyhow",
+  "atty",
+diff --git a/Cargo.toml b/Cargo.toml
+index 94c8e5b3..6f6912ec 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -29,7 +29,8 @@ quick-xml = "0.23.1"
+ rand = "0.8"
+ rangemap = "1.1"
+ roaring = "0.10"
+-rio = { git = "https://github.com/jthornber/rio", branch = "master", optional = true }
++#rio = { git = "https://github.com/jthornber/rio", branch = "master", optional = true }
++rio = { version = "0.9.4", optional = true }
+ safemem = "0.3"
+ threadpool = "1.8"
+ thiserror = "1.0"
+-- 
+2.39.1
+
