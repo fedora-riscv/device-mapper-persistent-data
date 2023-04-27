@@ -8,7 +8,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.9.0
-Release: 10%{?dist}%{?release_suffix}
+Release: 10.0.riscv64%{?dist}%{?release_suffix}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 #Source0: https://github.com/jthornber/thin-provisioning-tools/archive/thin-provisioning-tools-%%{version}.tar.gz
@@ -30,6 +30,7 @@ Patch12: 0011-file_utils-Fix-resource-leak.patch
 Patch13: 0012-thin_delta-Clean-up-duplicated-code.patch
 Patch14: 0013-build-Remove-lboost_iostreams-linker-flag.patch
 Patch15: 0014-cargo-update.patch
+Patch16: thin-provisioning-tools-0.9.0-vendor-riscv64.patch
 
 BuildRequires: autoconf, expat-devel, libaio-devel, libstdc++-devel, boost-devel, gcc-c++
 Requires: expat
@@ -80,6 +81,7 @@ END
 %patch12 -p1 -b .backup12
 %patch13 -p1 -b .backup13
 %patch14 -p1 -b .backup14
+%patch16 -p1 -b .riscv64
 # NOTE: patch 15 is above at the rust setup
 echo %{version}-%{release} > VERSION
 
@@ -153,6 +155,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install-rust-tools
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Thu Apr 27 2023 David Abdurachmanov <davidlt@rivosinc.com> - 0.9.0-10.0.riscv64
+- Update vendor code for riscv64
+
 * Sun Feb 05 2023 Fabio Valentini <decathorpe@gmail.com> - 0.9.0-10
 - Rebuild for fixed frame pointer compiler flags in Rust RPM macros.
 
