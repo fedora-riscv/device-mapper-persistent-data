@@ -1,4 +1,4 @@
-From 8b3609298420f5984ac3a2c74cb2ac4f94897eb0 Mon Sep 17 00:00:00 2001
+From 732ff5861a1525944a927439d1c075ac269788ce Mon Sep 17 00:00:00 2001
 From: Marian Csontos <mcsontos@redhat.com>
 Date: Thu, 27 Jul 2023 11:37:01 +0200
 Subject: [PATCH] Tweak cargo.toml to work with vendor directory
@@ -7,23 +7,21 @@ Mock works offline, cargo would try to download the files from github.
 So cargo vendor has to be run first, and then change the Cargo.toml to
 make mock happy.
 ---
- Cargo.toml | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Cargo.toml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Cargo.toml b/Cargo.toml
-index 8be49a52..b9b05ce6 100644
+index c2b496ac..562c40d3 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -11,7 +11,8 @@ anyhow = "1.0"
+@@ -11,6 +11,7 @@ anyhow = "1.0"
  base64 = "0.21"
  byteorder = "1.4"
  clap = { version = "4.3", default-features = false, features = ["std", "help", "usage", "error-context", "suggestions"] }
--crc32c = { git = "https://github.com/zowens/crc32c", branch = "master" }
 +#crc32c = { git = "https://github.com/zowens/crc32c", branch = "master" }
-+crc32c = "0.6"
+ crc32c = "0.6"
  data-encoding = "2.4"
  exitcode = "1.1.2"
- fixedbitset = "0.4"
 @@ -27,7 +28,8 @@ quick-xml = "0.29"
  rand = "0.8"
  rangemap = "1.3"
