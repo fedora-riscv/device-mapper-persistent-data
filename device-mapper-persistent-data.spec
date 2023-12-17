@@ -10,7 +10,7 @@
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 1.0.6
-Release: 2%{?dist}%{?release_suffix}
+Release: 2.rv64%{?dist}%{?release_suffix}
 License: GPLv3+
 #ExcludeArch: %%{ix86}
 URL: https://github.com/jthornber/thin-provisioning-tools
@@ -20,6 +20,7 @@ Source1: dmpd106-vendor.tar.gz
 Patch1: 0001-Tweak-cargo.toml-to-work-with-vendor-directory.patch
 Patch2: 0002-file_utils-Fix-the-ioctl-request-code-for-the-powerp.patch
 Patch3: 0003-file_utils-Verify-ioctl-request-code-in-tests.patch
+Patch16: thin-provisioning-tools-0.9.0-vendor-riscv64.patch
 
 %if %{defined rhel}
 BuildRequires: rust-toolset
@@ -52,6 +53,7 @@ replace-with = "vendored-sources"
 directory = "vendor"
 
 END
+%patch16 -p1 -b .riscv64
 echo %{version}-%{release} > VERSION
 
 %generate_buildrequires
@@ -138,6 +140,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 
 * Wed Mar 22 2023 Marian Csontos <mcsontos@redhat.com> - 1.0.3-1
 - Update to latest upstream release 1.0.3.
+
+* Thu Apr 27 2023 David Abdurachmanov <davidlt@rivosinc.com> - 0.9.0-10.0.riscv64
+- Update vendor code for riscv64
 
 * Sun Feb 05 2023 Fabio Valentini <decathorpe@gmail.com> - 0.9.0-10
 - Rebuild for fixed frame pointer compiler flags in Rust RPM macros.
